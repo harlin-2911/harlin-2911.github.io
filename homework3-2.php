@@ -1,15 +1,19 @@
 <?php
-echo "number = " . $_GET["number"] . "<br>";
+$n = 30;  
 
-$n = $_GET["number"];
+echo "n = $n<br><br>";
+
 for ($i = 0; $i < $n; $i++) {
-    $data[$i] = rand(10, 100); // 10 이상 100 이하의 정수
+    $data[$i] = rand(0, 100); // 0 이상 100 이하의 난수 생성
     echo "$i = $data[$i]<br>";
 }
 
 echo "<br>--- 정렬 후 ---<br>";
-sort($data);
+
+sort($data); 
+
 for ($i = 0; $i < $n; $i++) {
     echo "$i = $data[$i]<br>";
 }
 ?>
+
