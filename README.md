@@ -12,8 +12,8 @@
 
 [**homework3-2**](https://harlin-2911.github.io/homework3-2.PNG). 
 
-[**homework3-3**](https://harlin-2911.github.io/homework3-3(1).PNG). 
+[**homework3-3**](https://harlin-2911.github.io/homework3-3(1).png). 
 
-[**homework3-4**](https://harlin-2911.github.io/homework3-4(1).PNG). 
+[**homework3-4**](https://harlin-2911.github.io/homework3-4(1).png). 
 
 [**homework3-5**](https://harlin-2911.github.io/homework3-5.png). 
