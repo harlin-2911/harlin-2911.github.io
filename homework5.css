@@ -1,0 +1,111 @@
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-left: 10px;
+}
+
+p {
+    margin-left: 10px;
+}
+
+#menu {
+    border: solid 1.5px gray;
+    border-radius: 5px;
+
+}
+
+#order-summary {
+    border: solid 1.5px gray;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* 여기에 #menu와 #order-summary의 스타일을 추가하세요. */
+/* 버튼과 관련된 스타일은 아래의 예시를 참고하여 완성하세요. */
+
+button {
+    background-color: #00704a;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005936;
+}
+
+#submit-order {
+    display: block;
+    /* block 요소로 변경 */
+    margin: 20px auto;
+    /* 중앙 정렬 */
+    width: 90%;
+    /* 부모의 80% 너비를 차지 */
+    background-color: #00704a;
+    color: white;
+    /* 버튼을 크게 보이게 하기 위한 패딩 */
+    border: none;
+    border-radius: 5px;
+    /* 글씨 크기 조정 */
+    cursor: pointer;
+}
+
+.orderitemelements {
+    margin-top: 5px;
+}
+
+.remove {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove:hover {
+    background-color: pink
+}
+
+.linebox {
+    display: flex;
+    justify-content: space-between;
+    /* 라인박스를 조정해서 양 옆에 공간을 두고 요소들이 배치되게끔 조정함.  */
+    height: 50px;
+    /* 키를 조정해서 요소 간 간격이 어느 정도 있게 유격을 생성. */
+}
+
+.cofname {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.price-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#cofprice {
+    margin-right: 10px;
+}
+
+#addbtn{
+    margin-right: 10px;
+}
