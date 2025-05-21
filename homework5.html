@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>카페 주문 시스템</title>
+    <link rel="stylesheet" href="homework5.css">
 </head>
 
 <body>
@@ -24,126 +25,133 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-    const menu = [
-        { name: '아메리카노', price: 4100 },
-        { name: '카페라떼', price: 4600 },
-        { name: '카푸치노', price: 4600 },
-        { name: '카라멜 마끼아또', price: 5800 },
-        { name: '자바 칩 프라푸치노', price: 6300 },
-        { name: '딸기 요거트 블렌디드', price: 6300 },
-        { name: '제주 말차 크림 프라푸치노', price: 6500 }
-    ];
+            const menu = [
+                { name: '아메리카노', price: 4700 },
+                { name: '카페라떼', price: 5200 },
+                { name: '카푸치노', price: 5200 },
+                { name: '카라멜 마끼아또', price: 6100 },
+                { name: '자바 칩 프라푸치노', price: 6500 },
+                { name: '딸기 요거트 블렌디드', price: 6500 },
+                { name: '제주 말차 크림 프라푸치노', price: 6500 }
+            ];
 
-    let order = {}; // 주문 항목을 저장하는 딕셔너리.
-    let totalPrice = 0; // 전체 값.
+            let order = {};
+            let totalPrice = 0;
 
-    const menuContainer = document.getElementById('menu');
-    const orderList = document.getElementById('order-list');
-    const totalPriceElement = document.getElementById('total-price');
-    const submitOrderButton = document.getElementById('submit-order');
+            const menuContainer = document.getElementById('menu');
+            const orderList = document.getElementById('order-list');
+            const totalPriceElement = document.getElementById('total-price');
+            const submitOrderButton = document.getElementById('submit-order');
 
-    menu.forEach((item, index) => {
+            menu.forEach((item, index) => {
+                let divall = document.createElement('div');
+                divall.classList.add('linebox');
 
-        let divall = document.createElement('div'); // 커피 이름과 가격, 주문 추가 버튼이 다 들어있는 올인원 영역
-        divall.classList.add('linebox'); // 올인원 영역 클래스는 linebox
+                let div1 = document.createElement('div');
+                div1.classList.add('cofname');
+                let span1 = document.createElement('span');
+                span1.textContent = `${item.name}`;
+                div1.appendChild(span1);
 
-        let div1 = document.createElement('div');
-        div1.classList.add('cofname');
-        let span1 = document.createElement('span');
-        span1.textContent = `${item.name}`;
+                let div2 = document.createElement('div');
+                div2.classList.add('price-btn');
+                let span2 = document.createElement('span');
+                span2.id = 'cofprice';
+                span2.textContent = `₩${item.price}`;
+                let button = document.createElement('button');
+                button.id = 'addbtn';
+                button.innerText = '선택';
+                button.setAttribute('data-index', index);
 
-        div1.appendChild(span1)
+                div2.appendChild(span2);
+                div2.appendChild(button);
 
-        let div2 = document.createElement('div') // 커피 가격과 주문 추가 버튼이 들어있는 영역.
-        div2.classList.add('price-btn'); // 해당 영역 클래스는 price-btn
-        let span2 = document.createElement('span');
-        span2.id = 'cofprice';
-        span2.textContent = `₩${item.price}`;
-        let button = document.createElement('button');
-        button.id = 'addbtn';
-        button.innerText = '+1';
-        button.setAttribute('data-index', index); // 각 메뉴 아이템의 인덱스를 저장
+                divall.appendChild(div1);
+                divall.appendChild(div2);
 
-        div2.appendChild(span2)
-        div2.appendChild(button)
+                menuContainer.appendChild(divall);
+            });
 
-        divall.appendChild(div1)
-        divall.appendChild(div2) // 합체.
+            menuContainer.addEventListener('click', (event) => {
+                if (event.target.tagName === 'BUTTON') {
+                    const index = event.target.getAttribute('data-index');
+                    const selectedItem = menu[index];
 
-        document.getElementById('menu').appendChild(divall) // 오더 리스트에 추가.
+                    if (!order[selectedItem.name]) {
+                        order[selectedItem.name] = {
+                            price: selectedItem.price,
+                            quantity: 1
+                        };
+                    } else {
+                        order[selectedItem.name].quantity += 1;
+                    }
 
-    });
+                    totalPrice += selectedItem.price;
+                    updateOrderList();
+                }
+            });
 
-    menuContainer.addEventListener('click', (event) => {
-            // 버튼이 눌릴 시에 발동.
-        if (event.target.tagName === 'BUTTON') {
-            // 어떤 메뉴의 버튼이 눌릴 시.
-            const index = event.target.getAttribute('data-index');
-            // 클릭된 버튼의 data-index 속성을 가져옴
-            const selectedItem = menu[index];
-            // 메뉴 배열에서 해당 메뉴를 찾아옴 ex)아메리카노가 선택되면 0번째로 지정되겠지?
-
-            if (!order[selectedItem.name]) {  
-                order[selectedItem.name] = {
-                    price: selectedItem.price,
-                    quantity: 1
-                }; // order 리스트에 선택된 아이템의 이름이 존재하지 않을 시
-                   // price의 밸류를 선택된 커피의 값으로 변경.
-                   // quantity 키 생성 및 밸류를 1로 설정.
-                   // ex)아메리카노가 선택될 시, 0번째 인덱스의 이름을 조회.
-                   // 아메리카노의 수량을 1로 설정.
-            } else {
-                order[selectedItem.name].quantity += 1;
-                   // order 리스트에 선택된 아이템의 이름이 존재할 시.
-                   // quantity의 밸류를 1 늘린다.
-                   // 아메리카노가 이미 장바구니에 들어있으면, 아메리카노의 수량이 1에서 2가 된다.
+            // 주문 내역 업데이트 함수
+            function updateOrderList() {
+                orderList.innerHTML = '';
+                for (let itemName in order) {
+                    const orderItem = order[itemName];
+                    const orderItemElement = document.createElement('li');
+                    orderItemElement.classList.add('orderitemelements');
+                    orderItemElement.innerHTML = `
+                        ${itemName} - ₩${orderItem.price.toLocaleString()} x${orderItem.quantity}
+                        <button class="qty-btn" data-action="plus" data-item="${itemName}">+1</button>
+                        <button class="qty-btn" data-action="minus" data-item="${itemName}">-1</button>
+                        <button class="remove" data-item="${itemName}">삭제</button>
+                    `;
+                    orderList.appendChild(orderItemElement);
+                }
+                totalPriceElement.textContent = totalPrice.toLocaleString();
             }
 
-            totalPrice += selectedItem.price;
-            // 총합 가격은 selectedItem이란 딕셔너리의 price.
-            updateOrderList();
-            //주문 내역 업데이트 함수 불러오기.
-        }
-    });
+            // +1 / -1 버튼
+            orderList.addEventListener('click', (event) => {
+                const action = event.target.getAttribute('data-action');
+                const itemName = event.target.getAttribute('data-item');
 
-    // 주문 내역 업데이트 함수
-    function updateOrderList() {
-        orderList.innerHTML = '';
-        for (let itemName in order) {
-            const orderItem = order[itemName];
-            const orderItemElement = document.createElement('li');
-            orderItemElement.classList.add('orderitemelements');
-            orderItemElement.innerHTML = `
-                ${itemName} - ₩${orderItem.price.toLocaleString()} x${orderItem.quantity}
-                <button class="remove" data-item="${itemName}">삭제</button>
-            `;
-            orderList.appendChild(orderItemElement);
-        }
-        totalPriceElement.textContent = totalPrice.toLocaleString();
-    }
+                if (action === 'plus') {
+                    order[itemName].quantity += 1;
+                    totalPrice += order[itemName].price;
+                    updateOrderList();
+                }
 
-    // 아이템 삭제 로직
-    orderList.addEventListener('click', (event) => {
-        const itemName = event.target.getAttribute('data-item');
-        if (event.target.classList.contains('remove')) {
-            totalPrice -= order[itemName].price * order[itemName].quantity;
-            delete order[itemName];
-            updateOrderList();
-        }
-    });
+                if (action === 'minus') {
+                    order[itemName].quantity -= 1;
+                    totalPrice -= order[itemName].price;
+                    if (order[itemName].quantity <= 0) {
+                        delete order[itemName];
+                    }
+                    updateOrderList();
+                }
+            });
 
-    // 주문 제출 로직
-    submitOrderButton.addEventListener('click', () => {
-        if (Object.keys(order).length > 0) {
-            alert('주문해 주셔서 감사합니다!');
-            order = {};
-            totalPrice = 0;
-            updateOrderList();
-        } else {
-            alert('주문 내역이 비어 있습니다!');
-        }
-    });
-});
+            // 삭제 버튼
+            orderList.addEventListener('click', (event) => {
+                const itemName = event.target.getAttribute('data-item');
+                if (event.target.classList.contains('remove')) {
+                    totalPrice -= order[itemName].price * order[itemName].quantity;
+                    delete order[itemName];
+                    updateOrderList();
+                }
+            });
+
+            // 주문 제출
+            submitOrderButton.addEventListener('click', () => {
+                if (Object.keys(order).length > 0) {
+                    alert('주문해 주셔서 감사합니다!');
+                    order = {};
+                    totalPrice = 0;
+                    updateOrderList();
+                } else {
+                    alert('주문 내역이 비어 있습니다!');
+                }
+            });
+        });
     </script>
 </body>
 
