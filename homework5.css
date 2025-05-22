@@ -1,152 +1,114 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f6f5f3;
-    color: #333;
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #f7f5f2;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
 }
 
-/* 제목 스타일 */
 h1 {
-    text-align: center;
-    color:rgb(73, 90, 43);
-    margin-bottom: 18px;
-    font-weight: bold;
+  text-align: center;
+  color: #2e2e2e;
 }
 
-h2 {
-    margin: 15px 10px 10px;
-    color: #444;
-    font-weight: bold;
+#menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-p {
-    margin-left: 10px;
-    font-weight: normal;
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* 메뉴 영역 */
-#menu {
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
-    background-color: #ffffff;
-    padding: 10px;
+.item-info {
+  font-size: 16px;
 }
 
-/* 주문 내역 영역 */
+.item-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.item-controls button {
+  background-color: #00704a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.item-controls input {
+  width: 40px;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+#add-to-order {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background-color: #00704a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#add-to-order:hover {
+  background-color: #005c3b;
+}
+
 #order-summary {
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
-    background-color: #ffffff;
-    padding: 10px;
-    margin-top: 20px;
+  background-color: #ffffff;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
 }
 
-/* 주문 제출 버튼 */
+#order-summary h2 {
+  margin-top: 0;
+}
+
+#order-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+#order-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
 #submit-order {
-    display: block;
-    margin: 20px auto 0;
-    width: 90%;
-    background-color: #00704a;
-    color: white;
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-    font-size: 15px;
-    font-weight: normal;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 #submit-order:hover {
-    background-color: #005936;
-}
-
-/* 메뉴 항목 라인 */
-.linebox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-/* 커피 이름 */
-.cofname {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-    font-weight: 500;
-    font-size: 16px;
-    font-style: oblique;
-}
-
-/* 가격과 버튼 */
-.price-btn {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
-
-#cofprice {
-    margin-right: 10px;
-    font-weight: normal;
-}
-
-/* 메뉴에서 +1 버튼 */
-#addbtn {
-    background-color: #00704a;
-    color: white;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: normal;
-    transition: background-color 0.3s;
-}
-
-#addbtn:hover {
-    background-color: #005936;
-}
-
-/* 주문 내역 리스트 항목 */
-.orderitemelements {
-    margin: 6px 0;
-    padding-left: 10px;
-    font-size: 15px;
-}
-
-/* 삭제 버튼 */
-.remove {
-    background-color: rgb(231, 122, 122);
-    color: white;
-    padding: 4px 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-    font-size: 12px;
-    transition: background-color 0.3s;
-}
-
-.remove:hover {
-    background-color: rgb(209, 66, 66);
-}
-
-/* +1 / -1 수량 조절 버튼 */
-.qty-btn {
-    background-color: #ddd;
-    color: #333;
-    padding: 4px 8px;
-    border: none;
-    border-radius: 5px;
-    margin-left: 5px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.qty-btn:hover {
-    background-color: #bbb;
+  background-color: #111;
 }
