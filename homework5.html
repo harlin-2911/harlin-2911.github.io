@@ -1,157 +1,108 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>카페 주문 시스템</title>
-    <link rel="stylesheet" href="homework5.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>카페 앱 주문</title>
+  <link rel="stylesheet" href="homework5.css" />
 </head>
-
 <body>
-    <h1>카페 메뉴</h1>
+  <h1>카페 메뉴</h1>
+  <div id="menu-container"></div>
 
-    <div id="menu">
-        <h2>메뉴</h2>
-    </div>
+  <button id="add-to-order">담기</button>
 
-    <div id="order-summary">
-        <h2>주문 내역</h2>
-        <ul id="order-list"></ul>
-        <p>총 가격: ₩<span id="total-price">0</span></p>
-        <button id="submit-order">주문 제출</button>
-    </div>
+  <div id="order-summary">
+    <h2>주문 내역</h2>
+    <ul id="order-list"></ul>
+    <p>총 가격: ₩<span id="total-price">0</span></p>
+    <button id="submit-order">주문 제출</button>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menu = [
-                { name: '아메리카노', price: 4700 },
-                { name: '카페라떼', price: 5200 },
-                { name: '카푸치노', price: 5200 },
-                { name: '카라멜 마끼아또', price: 6100 },
-                { name: '자바 칩 프라푸치노', price: 6500 },
-                { name: '딸기 요거트 블렌디드', price: 6500 },
-                { name: '제주 말차 크림 프라푸치노', price: 6500 }
-            ];
+  <script>
+    const menu = [
+      { name: '아메리카노', price: 4100 },
+      { name: '카페라떼', price: 4600 },
+      { name: '카푸치노', price: 4600 },
+      { name: '카라멜 마끼아또', price: 5800 },
+      { name: '자바 칩 프라푸치노', price: 6300 },
+      { name: '딸기 요거트 블렌디드', price: 6300 },
+      { name: '제주 말차 크림 프라푸치노', price: 6500 }
+    ];
 
-            let order = {};
-            let totalPrice = 0;
+    const menuContainer = document.getElementById('menu-container');
+    const addToOrderBtn = document.getElementById('add-to-order');
+    const orderList = document.getElementById('order-list');
+    const totalPriceEl = document.getElementById('total-price');
+    const submitBtn = document.getElementById('submit-order');
 
-            const menuContainer = document.getElementById('menu');
-            const orderList = document.getElementById('order-list');
-            const totalPriceElement = document.getElementById('total-price');
-            const submitOrderButton = document.getElementById('submit-order');
+    let order = {};
 
-            menu.forEach((item, index) => {
-                let divall = document.createElement('div');
-                divall.classList.add('linebox');
+    menu.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.className = 'menu-item';
 
-                let div1 = document.createElement('div');
-                div1.classList.add('cofname');
-                let span1 = document.createElement('span');
-                span1.textContent = `${item.name}`;
-                div1.appendChild(span1);
+      card.innerHTML = `
+        <div class="item-info">
+          <strong>${item.name}</strong><br/>
+          <span>₩${item.price.toLocaleString()}</span>
+        </div>
+        <div class="item-controls">
+          <button class="minus" data-idx="${idx}">-</button>
+          <input type="number" min="0" value="0" id="qty-${idx}" readonly />
+          <button class="plus" data-idx="${idx}">+</button>
+        </div>
+      `;
 
-                let div2 = document.createElement('div');
-                div2.classList.add('price-btn');
-                let span2 = document.createElement('span');
-                span2.id = 'cofprice';
-                span2.textContent = `₩${item.price}`;
-                let button = document.createElement('button');
-                button.id = 'addbtn';
-                button.innerText = '선택';
-                button.setAttribute('data-index', index);
+      menuContainer.appendChild(card);
+    });
 
-                div2.appendChild(span2);
-                div2.appendChild(button);
+    menuContainer.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-idx');
+      if (idx !== null) {
+        const qtyInput = document.getElementById(`qty-${idx}`);
+        let current = parseInt(qtyInput.value);
+        if (e.target.classList.contains('plus')) {
+          qtyInput.value = current + 1;
+        } else if (e.target.classList.contains('minus') && current > 0) {
+          qtyInput.value = current - 1;
+        }
+      }
+    });
 
-                divall.appendChild(div1);
-                divall.appendChild(div2);
+    addToOrderBtn.addEventListener('click', () => {
+      order = {}; // 초기화
+      let total = 0;
+      menu.forEach((item, idx) => {
+        const qty = parseInt(document.getElementById(`qty-${idx}`).value);
+        if (qty > 0) {
+          order[item.name] = { price: item.price, quantity: qty };
+          total += item.price * qty;
+        }
+      });
+      updateOrderList();
+      totalPriceEl.textContent = total.toLocaleString();
+    });
 
-                menuContainer.appendChild(divall);
-            });
+    function updateOrderList() {
+      orderList.innerHTML = '';
+      for (const item in order) {
+        const li = document.createElement('li');
+        const data = order[item];
+        li.innerHTML = `${item} - ₩${data.price.toLocaleString()} x ${data.quantity}`;
+        orderList.appendChild(li);
+      }
+    }
 
-            menuContainer.addEventListener('click', (event) => {
-                if (event.target.tagName === 'BUTTON') {
-                    const index = event.target.getAttribute('data-index');
-                    const selectedItem = menu[index];
-
-                    if (!order[selectedItem.name]) {
-                        order[selectedItem.name] = {
-                            price: selectedItem.price,
-                            quantity: 1
-                        };
-                    } else {
-                        order[selectedItem.name].quantity += 1;
-                    }
-
-                    totalPrice += selectedItem.price;
-                    updateOrderList();
-                }
-            });
-
-            // 주문 내역 업데이트 함수
-            function updateOrderList() {
-                orderList.innerHTML = '';
-                for (let itemName in order) {
-                    const orderItem = order[itemName];
-                    const orderItemElement = document.createElement('li');
-                    orderItemElement.classList.add('orderitemelements');
-                    orderItemElement.innerHTML = `
-                        ${itemName} - ₩${orderItem.price.toLocaleString()} x${orderItem.quantity}
-                        <button class="qty-btn" data-action="plus" data-item="${itemName}">+1</button>
-                        <button class="qty-btn" data-action="minus" data-item="${itemName}">-1</button>
-                        <button class="remove" data-item="${itemName}">삭제</button>
-                    `;
-                    orderList.appendChild(orderItemElement);
-                }
-                totalPriceElement.textContent = totalPrice.toLocaleString();
-            }
-
-            // +1 / -1 버튼
-            orderList.addEventListener('click', (event) => {
-                const action = event.target.getAttribute('data-action');
-                const itemName = event.target.getAttribute('data-item');
-
-                if (action === 'plus') {
-                    order[itemName].quantity += 1;
-                    totalPrice += order[itemName].price;
-                    updateOrderList();
-                }
-
-                if (action === 'minus') {
-                    order[itemName].quantity -= 1;
-                    totalPrice -= order[itemName].price;
-                    if (order[itemName].quantity <= 0) {
-                        delete order[itemName];
-                    }
-                    updateOrderList();
-                }
-            });
-
-            // 삭제 버튼
-            orderList.addEventListener('click', (event) => {
-                const itemName = event.target.getAttribute('data-item');
-                if (event.target.classList.contains('remove')) {
-                    totalPrice -= order[itemName].price * order[itemName].quantity;
-                    delete order[itemName];
-                    updateOrderList();
-                }
-            });
-
-            // 주문 제출
-            submitOrderButton.addEventListener('click', () => {
-                if (Object.keys(order).length > 0) {
-                    alert('주문해 주셔서 감사합니다!');
-                    order = {};
-                    totalPrice = 0;
-                    updateOrderList();
-                } else {
-                    alert('주문 내역이 비어 있습니다!');
-                }
-            });
-        });
-    </script>
+    submitBtn.addEventListener('click', () => {
+      if (Object.keys(order).length > 0) {
+        alert('주문해 주셔서 감사합니다!');
+        location.reload(); // 새로고침으로 초기화
+      } else {
+        alert('주문 내역이 비어 있습니다.');
+      }
+    });
+  </script>
 </body>
-
 </html>
+
