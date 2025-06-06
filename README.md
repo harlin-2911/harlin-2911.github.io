@@ -33,3 +33,8 @@
 
 [**mouse**](https://harlin-2911.github.io/mouse.html). 
 
+
+[**homework6(html)**](https://harlin-2911.github.io/homework6.html).
+
+[**homework7(html)**](https://harlin-2911.github.io/homework7.html).
+
