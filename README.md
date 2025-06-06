@@ -39,4 +39,4 @@
 [**homework7**](https://harlin-2911.github.io/homework7.html).
 
 
-[**chain**](https://harlin-2911.github.io/chain.html).
+[**chain**](https://harlin-2911.github.io/chain/chain.html).
