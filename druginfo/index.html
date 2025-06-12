@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>💊 약물 정보 검색</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=SUIT&display=swap');
+
+    body {
+      font-family: 'SUIT', sans-serif;
+      background: linear-gradient(to bottom, #e0f7ff, #f5fcff);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #3a6073;
+      font-size: 2.2em;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      padding: 12px 15px;
+      width: 250px;
+      font-size: 16px;
+      border: 1px solid #cce7f5;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #a4ddf6;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #89cae5;
+    }
+  </style>
+</head>
+<body>
+  <h1>💊 약물 정보 검색</h1>
+  <form action="search_single.php" method="get">
+    <input type="text" name="drug" placeholder="예: 타이레놀" required>
+    <button type="submit">검색</button>
+  </form>
+</body>
+</html>
