@@ -40,3 +40,5 @@
 
 
 [**chain**](https://harlin-2911.github.io/chain/chain.html).
+
+[**druginfo-인공지능입문**](https://harlin-2911.github.io/chain/index.html).
